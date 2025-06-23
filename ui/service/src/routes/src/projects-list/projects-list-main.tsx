@@ -1,0 +1,64 @@
+import { responseParser } from 'servequery-ui-lib/api/client-heplers'
+import type { ProjectModel } from 'servequery-ui-lib/api/types'
+import type { StrictID } from 'servequery-ui-lib/api/types/utils'
+import { ensureIDInArray } from 'servequery-ui-lib/api/utils'
+import { useCurrentRouteParams } from 'servequery-ui-lib/router-utils/hooks'
+import type { CrumbDefinition } from 'servequery-ui-lib/router-utils/router-builder'
+import type { ActionArgs } from 'servequery-ui-lib/router-utils/types'
+import { Box, Grid, Typography } from 'servequery-ui-lib/shared-dependencies/mui-material'
+import { clientAPI } from '~/api'
+import type { GetRouteByPath } from '~/routes/types'
+import { AddNewProjectWrapper, ProjectCardWrapper } from './components'
+
+///////////////////
+//    ROUTE
+///////////////////
+
+export const currentRoutePath = '/?index'
+export type CurrentRoute = GetRouteByPath<typeof currentRoutePath>
+
+const crumb: CrumbDefinition = { title: 'Projects' }
+export const handle = { crumb }
+
+export const loadData = () =>
+  clientAPI.GET('/api/projects').then(responseParser()).then(ensureIDInArray)
+
+export const actions = {
+  'delete-project': (args: ActionArgs<{ data: { project_id: string } }>) =>
+    clientAPI
+      .DELETE('/api/projects/{project_id}', {
+        params: { path: { project_id: args.data.project_id } }
+      })
+      .then(responseParser({ notThrowExc: true })),
+  'create-project': ({ data }: ActionArgs<{ data: { project: ProjectModel } }>) =>
+    clientAPI
+      .POST('/api/projects', { body: data.project })
+      .then(responseParser({ notThrowExc: true })),
+  'edit-project': (args: ActionArgs<{ data: { project: StrictID<ProjectModel> } }>) =>
+    clientAPI
+      .POST('/api/projects/{project_id}/info', {
+        params: { path: { project_id: args.data.project.id } },
+        body: args.data.project
+      })
+      .then(responseParser({ notThrowExc: true }))
+}
+
+export const Component = () => {
+  const { loaderData: projects } = useCurrentRouteParams<CurrentRoute>()
+
+  return (
+    <>
+      <Typography align='center' variant={'h5'}>
+        {projects.length > 0 ? 'Project List' : "You don't have any projects yet"}
+      </Typography>
+      <Box m='auto' mt={2} maxWidth={600}>
+        <AddNewProjectWrapper />
+        <Grid container direction='column' justifyContent='center' alignItems='stretch'>
+          {projects.map((project) => (
+            <ProjectCardWrapper key={project.id} project={project} />
+          ))}
+        </Grid>
+      </Box>
+    </>
+  )
+}

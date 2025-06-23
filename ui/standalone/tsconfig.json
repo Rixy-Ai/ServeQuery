@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.base.ui",
+  "compilerOptions": {
+    "baseUrl": "./src"
+  },
+  "include": ["src"],
+  "references": [{ "path": "../packages/servequery-ui-lib/" }]
+}

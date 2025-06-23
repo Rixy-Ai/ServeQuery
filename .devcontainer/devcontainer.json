@@ -1,0 +1,15 @@
+{
+  "name": "Default Linux Universal",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "onCreateCommand": "./.devcontainer/on-create.sh",
+  "postAttachCommand": {
+    "ui": "source ./venv/bin/activate && servequery ui --port 8000 --demo-projects all --workspace test-workspace"
+  },
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "servequery UI",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}

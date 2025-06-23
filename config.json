@@ -1,0 +1,36 @@
+{
+  "data_format": {
+    "separator": ",",
+    "header": true,
+    "date_column": "dteday"
+  },
+  "column_mapping" : {},
+  "dashboard_tabs": {
+    "data_drift": {
+    },
+    "cat_target_drift":{
+      "verbose_level": 0
+    }
+  },
+  "options": {
+    "data_drift": {
+      "confidence": 0.95,
+      "drift_share": 0.5,
+      "nbinsx": null,
+      "xbins": null
+    }
+  },
+  "pretty_print": true,
+  "sampling": {
+    "reference": {
+      "type": "none",
+      "n": 1,
+      "ratio": 0.1
+    },
+    "current": {
+      "type": "nth",
+      "n": 2,
+      "ratio": 0.1
+    }
+  }
+}

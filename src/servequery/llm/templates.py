@@ -1,0 +1,4 @@
+from servequery.legacy.descriptors.llm_judges import BinaryClassificationPromptTemplate
+from servequery.legacy.descriptors.llm_judges import MulticlassClassificationPromptTemplate
+
+__all__ = ["BinaryClassificationPromptTemplate", "MulticlassClassificationPromptTemplate"]

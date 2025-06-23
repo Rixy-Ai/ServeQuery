@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "description": "ServeQuery UI Monorepo",
+  "scripts": {
+    "type-check": "pnpm --workspace-concurrency 1 -r type-check",
+    "code-check": "pnpm -r code-check",
+    "build": "pnpm -r build",
+    "clean-assets-service": "rm -rf ../src/servequery/legacy/ui/assets/*",
+    "copy-assets-service": "cp -r ./service/dist/* ../src/servequery/legacy/ui/assets",
+    "clean-assets-service-v2": "rm -rf ../src/servequery/ui/service/assets/*",
+    "copy-assets-service-v2": "cp -r ./service_v2/dist/* ../src/servequery/ui/service/assets",
+    "clean-assets-standalone": "rm -rf ../src/servequery/nbextension/static/index.js",
+    "copy-assets-standalone": "cp ./standalone/dist/index.js ../src/servequery/nbextension/static",
+    "clean-assets-all": "pnpm clean-assets-service && pnpm clean-assets-service-v2 && pnpm clean-assets-standalone",
+    "copy-assets-all": "pnpm copy-assets-service && pnpm copy-assets-service-v2 && pnpm copy-assets-standalone",
+    "full-build": "pnpm build && pnpm clean-assets-all && pnpm copy-assets-all"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "dependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
+}
