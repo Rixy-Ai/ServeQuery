@@ -29,6 +29,6 @@ cryptography==43.0.1
 
 openai==1.16.2
 evaluate==0.4.1
-transformers[torch]==4.39.3
+transformers>=4.50.0
 sentence-transformers==2.7.0
 sqlvalidator==0.0.20
